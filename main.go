@@ -23,6 +23,16 @@ func init() {
 
 func main() {
 
+	/*
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":8080", nil)*/
+	http.HandleFunc("/", HandleMain)
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
+
+
+
 	//token := os.Getenv("TOKEN")
 	//dg, err := discordgo.New(token)
 	dg, err := discordgo.New("Bot " + Token)
@@ -32,14 +42,6 @@ func main() {
 	}
 
 
-	/*
-
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
-	http.ListenAndServe(":8080", nil)*/
-	http.HandleFunc("/", HandleMain)
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
 
