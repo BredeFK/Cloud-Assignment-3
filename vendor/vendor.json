@@ -3,8 +3,7 @@
 	"heroku": {
 		"goVersion": "go1.9",
 		"install": [
-			"./cmd/oblig2",
-			"./cmd/webhook"
+			"./..."
 		]
 	},
 	"ignore": "test",
