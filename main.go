@@ -22,10 +22,10 @@ func main() {
 
 	/*http.HandleFunc("/", HandleMain)
 
-
-	http.ListenAndServe(":8080", nil)*/
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":8080", nil)*/
+
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
 

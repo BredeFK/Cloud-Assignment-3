@@ -1,1 +1,1 @@
-web: CloudTech_oblig3
+worker: CloudTech_oblig3
