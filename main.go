@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 	"flag"
+	"net/http"
 )
 
 // Variables used for command line parameters
@@ -31,12 +32,14 @@ func main() {
 	}
 
 
-	/*http.HandleFunc("/", HandleMain)
+	/*
 
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
 	http.ListenAndServe(":8080", nil)*/
-
+	http.HandleFunc("/", HandleMain)
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
 
