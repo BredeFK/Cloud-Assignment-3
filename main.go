@@ -6,13 +6,25 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"flag"
 )
+
+// Variables used for command line parameters
+var (
+	Token string
+)
+
+func init() {
+
+	flag.StringVar(&Token, "t", "Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg", "Bot Token")
+	flag.Parse()
+}
 
 func main() {
 
 	//token := os.Getenv("TOKEN")
 	//dg, err := discordgo.New(token)
-	dg, err := discordgo.New("Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg")
+	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
@@ -51,16 +63,16 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// Ignore all messages created by the bot itself
 	// This isn't required in this specific example but it's a good practice.
-//	if m.Author.ID == s.State.User.ID {
-//		return
-//	}
+	if m.Author.ID == s.State.User.ID {
+		return
+	}
 	// If the message is "ping" reply with "Pong!"
 	if m.Content == "fuck" {
 		s.ChannelMessageSend(m.ChannelID, "you!")
 	}
 
 	// If the message is "pong" reply with "Ping!"
-	if m.Content == "pong" {
-		s.ChannelMessageSend(m.ChannelID, "Ping!")
+	if m.Content == "fuck hvem?" {
+		s.ChannelMessageSend(m.ChannelID, "fuck Brede!")
 	}
 }
