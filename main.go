@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"net/http"
 )
 
 func main() {
@@ -21,10 +22,10 @@ func main() {
 
 	/*http.HandleFunc("/", HandleMain)
 
-//	port := os.Getenv("PORT")
-//	http.ListenAndServe(":"+port, nil)
-	http.ListenAndServe(":8080", nil)*/
 
+	http.ListenAndServe(":8080", nil)*/
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
 
