@@ -24,6 +24,15 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 		}*/
 }
 
-func HandleTest(w http.ResponseWriter, r *http.Request) {
-
+func HandleWebhook(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		fmt.Fprintln(w, "/*Here be dragons*/")
+	case "POST":
+		//HandlePost(w, r)
+		fmt.Fprintln(w, "/*Here be dragons too*/")
+		//ta inn webhook shit her.
+	default:
+		http.Error(w, "Request not supported.", http.StatusNotImplemented)
+	}
 }
