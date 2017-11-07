@@ -74,6 +74,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// If the message is "pong" reply with "Ping!"
 	if m.Content == "fuck hvem?" {
-		s.ChannelMessageSend(m.ChannelID, "fuck Brede!")
+		s.ChannelMessageSend(m.ChannelID, "fuck Johan!")
 	}
 }
