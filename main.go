@@ -23,14 +23,6 @@ func init() {
 
 func main() {
 
-	/*
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)*/
-
-//	http.HandleFunc("/", HandleMain)
-//	http.ListenAndServe(":8080", nil)
-
-
 
 	//token := os.Getenv("TOKEN")
 	//dg, err := discordgo.New(token)
@@ -60,6 +52,8 @@ func main() {
 	// Cleanly close down the Discord session.
 	dg.Close()
 
+
+	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
 }
