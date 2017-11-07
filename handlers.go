@@ -9,7 +9,6 @@ import (
 //HandleMain main function for /
 func HandleMain(w http.ResponseWriter, r *http.Request) {
 	//	URL := strings.Split(r.URL.Path, "/")
-	fmt.Fprintf(w, os.Getenv("MONGODB_URI"))
 	fmt.Fprintf(w, "Dyno woken up! yai %s\n", http.StatusOK)
 	/*
 		switch r.Method {
