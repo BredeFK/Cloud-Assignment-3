@@ -53,6 +53,8 @@ func main() {
 	dg.Close()
 
 
+
+	http.HandleFunc("/", HandleMain)
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
