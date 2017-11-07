@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"strings"
 )
+//hei barn
 
 // Variables used for command line parameters
 var (
