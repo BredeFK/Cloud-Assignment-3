@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 //HandleMain main function for /
 func HandleMain(w http.ResponseWriter, r *http.Request) {
 	//	URL := strings.Split(r.URL.Path, "/")
-
+	fmt.Println(os.Getenv("MONGODB_URI"))
 	fmt.Fprintf(w, "Dyno woken up! yai %s\n", http.StatusOK)
 	/*
 		switch r.Method {

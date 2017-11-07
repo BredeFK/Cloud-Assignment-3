@@ -52,6 +52,7 @@ func main() {
 //	http.ListenAndServe(":"+port, nil)
 	http.ListenAndServe(":8080", nil)
 
+
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
@@ -95,6 +96,7 @@ func SendFlow(discMsg string, discID string)(string, string, string){
 		return "", "", ""
 	}
 
+
 	ai.Header.Set("Authorization", "Bearer "+authToken)
 
 	if resp, err := http.DefaultClient.Do(ai); err != nil {
@@ -110,6 +112,7 @@ func SendFlow(discMsg string, discID string)(string, string, string){
 		}
 
 		return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"]
+
 	}
 }
 
