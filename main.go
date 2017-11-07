@@ -27,8 +27,8 @@ func main() {
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)*/
 
-	http.HandleFunc("/", HandleMain)
-	http.ListenAndServe(":8080", nil)
+//	http.HandleFunc("/", HandleMain)
+//	http.ListenAndServe(":8080", nil)
 
 
 
@@ -59,6 +59,9 @@ func main() {
 
 	// Cleanly close down the Discord session.
 	dg.Close()
+
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
 }
 
 // This function will be called (due to AddHandler above) every time a new
