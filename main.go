@@ -22,7 +22,7 @@ var (
 
 func init() {
 
-	flag.StringVar(&Token, "t", "Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg", "Bot Token")
+	flag.StringVar(&Token, "t", os.Getenv("DISCORD_TOKEN"), "Bot Token")
 	flag.Parse()
 }
 
@@ -83,7 +83,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func SendFlow(discMsg string, discID string)(string, string, string){
-	authToken := "5bd836a84e0747a1a091bb1a6aef9ad1"
+	authToken := os.Getenv("APIAI_TOKEN")
 
 
 	params := url.Values{}
