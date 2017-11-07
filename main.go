@@ -46,6 +46,7 @@ func main() {
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
 
+
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
