@@ -48,9 +48,9 @@ func main() {
 	http.HandleFunc("/", HandleMain)
 	http.HandleFunc("/webhook", HandleWebhook)
 	//Router
-//	port := os.Getenv("PORT")
-//	http.ListenAndServe(":"+port, nil)
-	http.ListenAndServe(":8080", nil)
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
+//	http.ListenAndServe(":8080", nil)
 
 
 	// Wait here until CTRL-C or other term signal is received.
@@ -89,8 +89,8 @@ func SendFlow(discMsg string, discID string)(string, string, string){
 	params.Add("query", discMsg)
 	params.Set("sessionId", discID)
 
-	url := fmt.Sprintf("https://api.api.ai/v1/query?V=20170712&lang=En&%s", params.Encode())
-	ai, err := http.NewRequest("GET", url, nil)
+	URL := fmt.Sprintf("https://api.api.ai/v1/query?V=20170712&lang=En&%s", params.Encode())
+	ai, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		fmt.Println("something wrong with the GET request to dialogflow!")
 		return "", "", ""
