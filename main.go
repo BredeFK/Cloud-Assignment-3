@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/bwmarrin/discordgo"
+	"flag"
 	"fmt"
+	"github.com/bwmarrin/discordgo"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"flag"
-	"net/http"
 )
 
 // Variables used for command line parameters
@@ -23,7 +23,6 @@ func init() {
 
 func main() {
 
-
 	//token := os.Getenv("TOKEN")
 	//dg, err := discordgo.New(token)
 	dg, err := discordgo.New("Bot " + Token)
@@ -31,7 +30,6 @@ func main() {
 		fmt.Println("error creating Discord session,", err)
 		return
 	}
-
 
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(messageCreate)
@@ -43,6 +41,11 @@ func main() {
 		return
 	}
 
+	http.HandleFunc("/", HandleMain)
+	//Router
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
+
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
@@ -53,11 +56,6 @@ func main() {
 	dg.Close()
 
 
-
-	http.HandleFunc("/", HandleMain)
-	//Router
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
 }
 
 // This function will be called (due to AddHandler above) every time a new
