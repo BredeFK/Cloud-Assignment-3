@@ -25,11 +25,10 @@ func main() {
 
 	/*
 	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
-	http.ListenAndServe(":8080", nil)*/
+	http.ListenAndServe(":"+port, nil)*/
+
 	http.HandleFunc("/", HandleMain)
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":8080", nil)
 
 
 
