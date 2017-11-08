@@ -50,6 +50,7 @@ func GetCurrency() Data2d {
 		for j := 0; j < len(s1); j++ {
 			//skip identical currency codes
 			if s1[i] != s1[j] {
+				//add data to 2d map
 				Add2d(data2d.Data, s1[i], s1[j], data.Rates[s1[j]])
 			}
 		}
