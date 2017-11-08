@@ -86,10 +86,14 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}else if amount2 > 0{
 			value *= amount2
 		}
+
+		if value != 0 {
+			s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
+		}
 	}
-	if value != 0 {
-		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
-	}
+
+		s.ChannelMessageSend(m.ChannelID, ans)
+
 }
 
 // SendFlow ...
