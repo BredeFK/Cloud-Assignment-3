@@ -9,7 +9,7 @@ type MongoDB struct {
 
 // Currency struct
 type Currency struct {
-	Base  map[string]float64  `json:"base"`
+	Base  string			 `json:"base"`
 	Date  string             `json:"date"`
 	Rates map[string]float64 `json:"rates"`
 }

@@ -52,7 +52,7 @@ func (db *MongoDB) Init() {
 }
 
 // Add adds the db
-func (db *MongoDB) Add(p Currency) error {
+func (db *MongoDB) Add(c Currency) error {
 	session, err := mgo.Dial(db.DatabaseURL)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -60,7 +60,7 @@ func (db *MongoDB) Add(p Currency) error {
 
 	defer session.Close()
 
-	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(p)
+	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(c)
 
 	if err != nil {
 		log.Printf("Could not add to db, error in Insert(): %v", err.Error())
