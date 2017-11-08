@@ -3,7 +3,8 @@
 	"heroku": {
 		"goVersion": "go1.9",
 		"install": [
-			"./..."
+			"./cmd/currency",
+			"./cmd/webhook"
 		]
 	},
 	"ignore": "test",

@@ -1,1 +1,2 @@
-web: CloudTech_oblig3
+web: currency
+job: webhook

@@ -1,4 +1,4 @@
-package main
+package gofiles
 
 // MongoDB struct
 type MongoDB struct {

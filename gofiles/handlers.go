@@ -1,4 +1,4 @@
-package main
+package gofiles
 
 import (
 	"fmt"
@@ -39,5 +39,5 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 
 // HandleAddCurrency adds currencies to db
 func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
-	DailyCurrencyAdder()
+
 }
