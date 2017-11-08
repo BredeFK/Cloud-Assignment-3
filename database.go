@@ -52,7 +52,7 @@ func (db *MongoDB) Init() {
 }
 
 // Add adds the db
-func (db *MongoDB) Add(p Currency) error {
+func (db *MongoDB) Add(p Data2d) error {
 	session, err := mgo.Dial(db.DatabaseURL)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -71,10 +71,10 @@ func (db *MongoDB) Add(p Currency) error {
 }
 
 // DailyCurrencyAdder adds currency once a day
-func DailyCurrencyAdder(URL string) {
-	currency := GetCurrency(URL)
+func DailyCurrencyAdder() {
+	data2d := GetCurrency()
 	db := SetupDB()
 	db.Init()
-	db.Add(currency)
+	db.Add(data2d)
 
 }

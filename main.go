@@ -49,10 +49,10 @@ func main() {
 	http.HandleFunc("/", HandleMain)
 	http.HandleFunc("/webhook", HandleWebhook)
 	http.HandleFunc("/add", HandleAddCurrency)	// TODO : Remove this and make it automatic
-	http.HandleFunc("/test", test)
+
 	//Router
-//	port := os.Getenv("PORT")
-//	http.ListenAndServe(":"+port, nil)
+	port := os.Getenv("PORT")
+	http.ListenAndServe(":"+port, nil)
 	http.ListenAndServe(":8080", nil)
 
 

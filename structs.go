@@ -28,6 +28,8 @@ type ApiPayload struct {
 	} `json:"result"`
 }
 
+//2d data map
+type Data2d map[string]map[string]float64
 
 //Data struct
 type Data struct {
