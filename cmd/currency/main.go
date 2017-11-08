@@ -1,18 +1,19 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/JohanAanesen/CloudTech_oblig3/gofiles"
 	"github.com/bwmarrin/discordgo"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
+	"log"
+	"io/ioutil"
+	"encoding/json"
+	"strings"
 )
 
 // Variables used for command line parameters
@@ -33,7 +34,7 @@ func main() {
 	//dg, err := discordgo.New(token)
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
-		fmt.Println("error creating Discord session,", err)
+		log.Println("Error creating Discord session,", err.Error())
 		return
 	}
 
@@ -43,12 +44,11 @@ func main() {
 	// Open a websocket connection to Discord and begin listening.
 	err = dg.Open()
 	if err != nil {
-		fmt.Println("error opening connection,", err)
+		log.Println("Error opening connection,", err.Error())
 		return
 	}
 
 	http.HandleFunc("/", gofiles.HandleMain)
-	http.HandleFunc("/webhook", gofiles.HandleWebhook)
 
 	//Router
 	port := os.Getenv("PORT")
@@ -56,7 +56,7 @@ func main() {
 	//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
+	log.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
@@ -113,15 +113,10 @@ func SendFlow(discMsg string, discID string) (string, string, string, float64) {
 		if err != nil {
 			return "", "", "", 0
 		}
-
 		if input.Result.Parameters["number"] != "" {
 			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"].(float64)
 		}
-
 		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), 0
-
-
 	}
-
 	return "", "", "", 0
 }
