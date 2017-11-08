@@ -2,7 +2,6 @@ package gofiles
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
