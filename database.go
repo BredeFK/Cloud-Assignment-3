@@ -52,7 +52,7 @@ func (db *MongoDB) Init() {
 }
 
 // Add adds the db
-func (db *MongoDB) Add(p Data2d) error {
+func (db *MongoDB) Add(data Data2d) error {
 
 	session, err := mgo.Dial(db.DatabaseURL)
 	if err != nil {
@@ -61,7 +61,7 @@ func (db *MongoDB) Add(p Data2d) error {
 
 	defer session.Close()
 
-	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(c)
+	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(data)
 
 	if err != nil {
 		log.Printf("Could not add to db, error in Insert(): %v", err.Error())
