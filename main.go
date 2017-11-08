@@ -79,7 +79,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	value := GetValue(base, target)
 
 	if value != 0 {
-		s.ChannelMessageSend(m.ChannelID, ans+fmt.Sprint(value))
+		s.ChannelMessageSend(m.ChannelID, ans + " "+ fmt.Sprint(value))
 	}
 }
 
