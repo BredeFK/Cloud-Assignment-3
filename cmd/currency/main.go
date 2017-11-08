@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/JohanAanesen/CloudTech_oblig3/gofiles"
 	"github.com/bwmarrin/discordgo"
 	"io/ioutil"
 	"net/http"
@@ -12,7 +13,6 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
-	"github.com/JohanAanesen/CloudTech_oblig3/gofiles"
 )
 
 // Variables used for command line parameters
@@ -48,13 +48,12 @@ func main() {
 	}
 
 	http.HandleFunc("/", gofiles.HandleMain)
-	http.HandleFunc("/webhook", HandleWebhook)
-	http.HandleFunc("/add", HandleAddCurrency) // TODO : Remove this and make it automatic
+	http.HandleFunc("/webhook", gofiles.HandleWebhook)
 
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
-//	http.ListenAndServe(":8080", nil)
+	//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -77,10 +76,10 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	ans, base, target := SendFlow(m.Content, m.Author.ID)
 
-	value := GetValue(base, target)
+	value := gofiles.GetValue(base, target)
 
 	if value != 0 {
-		s.ChannelMessageSend(m.ChannelID, ans + " "+ fmt.Sprint(value))
+		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
 	}
 }
 
@@ -106,7 +105,7 @@ func SendFlow(discMsg string, discID string) (string, string, string) {
 	} else {
 		defer resp.Body.Close()
 
-		var input ApiPayload
+		var input gofiles.ApiPayload
 		datastring, _ := ioutil.ReadAll(resp.Body)
 		err := json.NewDecoder(strings.NewReader(string(datastring))).Decode(&input)
 		if err != nil {
