@@ -80,8 +80,9 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	value := getFixer(base, target)
 
-
-	s.ChannelMessageSend(m.ChannelID, ans+fmt.Sprint(value))
+	if value != 0 {
+		s.ChannelMessageSend(m.ChannelID, ans+fmt.Sprint(value))
+	}
 }
 
 func SendFlow(discMsg string, discID string)(string, string, string){
@@ -124,13 +125,6 @@ func getFixer(s1 string, s2 string)(float64){
 	if err != nil {
 		fmt.Printf("fixer.io is not responding, %s\n", err)
 		return 0
-	}
-
-	//Data struct
-	type Data struct {
-		Base  string             `json:"base" bson:"base"`
-		Date  string             `json:"date" bson:"date"`
-		Rates map[string]float64 `json:"rates" bson:"rates"`
 	}
 
 	//data object

@@ -8,7 +8,6 @@ import (
 )
 
 // GetCurrency gets the currency from string URL
-
 func GetCurrency() Data2d{
 
 	//Currency codes
@@ -60,7 +59,6 @@ func GetCurrency() Data2d{
 	return data2d
 }
 
-
 //Add2d adds base, target and value of a currency to the 2d map
 func Add2d(m map[string]map[string]float64, base string, target string, value float64) {
 	mm, ok := m[base]
@@ -70,4 +68,9 @@ func Add2d(m map[string]map[string]float64, base string, target string, value fl
 		m[base] = mm
 	}
 	mm[target] = value
+}
+
+func GetValue(s1 string, s2 string) float64{
+	data2d := dbgetdata2d()
+	return data2d.Data[s1][s2]
 }
