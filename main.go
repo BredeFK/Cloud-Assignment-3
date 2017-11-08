@@ -48,6 +48,7 @@ func main() {
 
 	http.HandleFunc("/", HandleMain)
 	http.HandleFunc("/webhook", HandleWebhook)
+	http.HandleFunc("/test", test)
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
