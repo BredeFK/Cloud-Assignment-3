@@ -35,3 +35,7 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Request not supported.", http.StatusNotImplemented)
 	}
 }
+
+func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
+
+}

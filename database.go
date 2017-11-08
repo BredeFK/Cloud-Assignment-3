@@ -7,9 +7,10 @@ import (
 	"fmt"
 )
 
+// SetupDB sets up the database
 func SetupDB() *MongoDB {
 	db := MongoDB{
-		os.Getenv("MONGODB_URI"),
+		os.Getenv("MONGODB_URI"), // Environment variable from Heroku
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}
@@ -69,19 +70,11 @@ func (db *MongoDB) Add(p Currency) error {
 	return nil
 }
 
-// Count counts the colCurrency
-func (db *MongoDB) Count() int {
-	session, err := mgo.Dial(db.DatabaseURL)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	defer session.Close()
+// DailyCurrencyAdder adds currency once a day
+func DailyCurrencyAdder() {
+	currency := GetCurrency(URL)
+	db := SetupDB()
+	db.Init()
+	db.Add(currency)
 
-	count, err := session.DB(db.DatabaseName).C(db.ColCurrency).Count()
-	if err != nil {
-		log.Printf("Error in Count(): %v", err.Error())
-		return -1
-	}
-
-	return count
 }
