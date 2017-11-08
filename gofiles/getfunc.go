@@ -33,7 +33,7 @@ func GetCurrency() Data2d {
 		//gets currencies from Fixer with the BASE currency
 		json1, err := http.Get("http://api.fixer.io/latest?base=" + s1[i]) //+ "," + s2)
 		if err != nil {
-			fmt.Printf("fixer.io is not responding, %s\n", err)
+			log.Printf("fixer.io is not responding, %s\n", err.Error())
 			panic(err)
 		}
 
@@ -43,7 +43,7 @@ func GetCurrency() Data2d {
 		//json decoder
 		err = json.NewDecoder(json1.Body).Decode(&data)
 		if err != nil { //err handler
-			fmt.Printf("Error: %s\n", err)
+			log.Printf("Error: %s\n", err.Error())
 			panic(err)
 		}
 

@@ -13,6 +13,7 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+	"log"
 )
 
 // Variables used for command line parameters
@@ -33,7 +34,7 @@ func main() {
 	//dg, err := discordgo.New(token)
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
-		fmt.Println("error creating Discord session,", err)
+		log.Println("Error creating Discord session,", err.Error())
 		return
 	}
 
@@ -43,12 +44,11 @@ func main() {
 	// Open a websocket connection to Discord and begin listening.
 	err = dg.Open()
 	if err != nil {
-		fmt.Println("error opening connection,", err)
+		log.Println("Error opening connection,", err.Error())
 		return
 	}
 
 	http.HandleFunc("/", gofiles.HandleMain)
-	http.HandleFunc("/webhook", gofiles.HandleWebhook)
 
 	//Router
 	port := os.Getenv("PORT")
@@ -56,7 +56,7 @@ func main() {
 	//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
+	log.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
@@ -94,7 +94,7 @@ func SendFlow(discMsg string, discID string) (string, string, string) {
 	URL := fmt.Sprintf("https://api.api.ai/v1/query?V=20170712&lang=En&%s", params.Encode())
 	ai, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
-		fmt.Println("something wrong with the GET request to dialogflow!")
+		log.Println("Something wrong with the GET request to dialogflow!")
 		return "", "", ""
 	}
 
@@ -109,6 +109,7 @@ func SendFlow(discMsg string, discID string) (string, string, string) {
 		datastring, _ := ioutil.ReadAll(resp.Body)
 		err := json.NewDecoder(strings.NewReader(string(datastring))).Decode(&input)
 		if err != nil {
+			log.Println(err.Error())
 			return "", "", ""
 		}
 
