@@ -29,7 +29,15 @@ type ApiPayload struct {
 }
 
 //2d data map
-type Data2d map[string]map[string]float64
+type Data2d struct{
+	Date string			`json:"date"`
+	Data map[string]map[string]float64 `json:"data"`
+}
+
+type DataDate struct{
+	Date string
+	Map Data2d
+}
 
 //Data struct
 type Data struct {

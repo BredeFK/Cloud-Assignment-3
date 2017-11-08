@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"fmt"
+	"time"
 )
 
 // GetCurrency gets the currency from string URL
@@ -23,7 +24,11 @@ func GetCurrency() Data2d{
 
 	//initialize the map
 	var data2d Data2d
-	data2d = make(map[string]map[string]float64)
+	data2d.Data = make(map[string]map[string]float64)
+
+	//sets date
+	data2d.Date = time.Now().Format("2006-01-02")
+
 
 	for i := 0; i < len(s1); i++ {
 		//gets currencies from Fixer with the BASE currency
@@ -47,7 +52,7 @@ func GetCurrency() Data2d{
 		for j := 0; j < len(s1); j++ {
 			//skip identical currency codes
 			if s1[i] != s1[j] {
-				Add2d(data2d, s1[i], s1[j], data.Rates[s1[j]])
+				Add2d(data2d.Data, s1[i], s1[j], data.Rates[s1[j]])
 			}
 		}
 	}
