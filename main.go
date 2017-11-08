@@ -51,9 +51,9 @@ func main() {
 	http.HandleFunc("/add", HandleAddCurrency)	// TODO : Remove this and make it automatic
 	http.HandleFunc("/test", test)
 	//Router
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, nil)
-//	http.ListenAndServe(":8080", nil)
+//	port := os.Getenv("PORT")
+//	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":8080", nil)
 
 
 	// Wait here until CTRL-C or other term signal is received.

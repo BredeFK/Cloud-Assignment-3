@@ -45,12 +45,25 @@ func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
 
 func test(w http.ResponseWriter, r *http.Request){
 
-	s1 := []string{"EUR", "NOK", "USD", "JPY"}
-	type data2d map[string]Data
+	//Currency codes
+	s1 := []string{
+			"AUD", "BGN", "BRL", "CAD",
+			"CHF", "CNY", "CZK", "DKK",
+			"EUR", "GBP", "HKD", "HRK",
+			"HUF", "IDR", "ILS", "INR",
+			"JPY", "KRW", "MXN", "MYR",
+			"NOK", "NZD", "PHP", "PLN",
+			"RON", "RUB", "SEK", "SGD",
+			"THB", "TRY", "USD", "ZAR"}
 
-	var shit data2d
+	//2d data map
+	var data2d map[string]map[string]float64
+
+	//initialize the map
+	data2d = make(map[string]map[string]float64)
 
 	for i := 0; i < len(s1); i++ {
+		//gets currencies from Fixer with the BASE currency
 		json1, err := http.Get("http://api.fixer.io/latest?base=" + s1[i]) //+ "," + s2)
 		if err != nil {
 		fmt.Printf("fixer.io is not responding, %s\n", err)
@@ -67,9 +80,25 @@ func test(w http.ResponseWriter, r *http.Request){
 		return
 		}
 
-		shit[s1[i]] = data
-
+		//loops through all currency codes and adds them to 2d data map
+		for j := 0; j < len(s1); j++ {
+			//skip identical currency codes
+			if s1[i] != s1[j] {
+				Add2d(data2d, s1[i], s1[j], data.Rates[s1[j]])
+			}
+		}
 	}
-	fmt.Fprintln(w, shit)
+	fmt.Fprintf(w, "%s\n", data2d)
 
+}
+
+//Add2d adds base, target and value of a currency to the 2d map
+func Add2d(m map[string]map[string]float64, base string, target string, value float64) {
+	mm, ok := m[base]
+	//initializes the child maps
+	if !ok {
+		mm = make(map[string]float64)
+		m[base] = mm
+	}
+	mm[target] = value
 }
