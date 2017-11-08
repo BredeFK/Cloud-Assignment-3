@@ -64,5 +64,5 @@ func test(w http.ResponseWriter, r *http.Request){
 		shit[s1[i]] = data
 
 	}
-	fmt.Println(shit)
+	fmt.Fprintln(w, shit)
 }
