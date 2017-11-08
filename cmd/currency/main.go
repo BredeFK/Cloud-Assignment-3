@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+	"github.com/JohanAanesen/CloudTech_oblig3/gofiles"
 )
 
 // Variables used for command line parameters
@@ -46,7 +47,7 @@ func main() {
 		return
 	}
 
-	http.HandleFunc("/", HandleMain)
+	http.HandleFunc("/", gofiles.HandleMain)
 	http.HandleFunc("/webhook", HandleWebhook)
 	http.HandleFunc("/add", HandleAddCurrency) // TODO : Remove this and make it automatic
 
