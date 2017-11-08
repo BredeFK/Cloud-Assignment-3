@@ -10,7 +10,7 @@ import (
 // SetupDB sets up the database
 func SetupDB() *MongoDB {
 	db := MongoDB{
-		os.Getenv("MONGODB_URI"), // Environment variable from Heroku
+		os.Getenv("MONGODB"), // Environment variable from Heroku
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}
@@ -76,5 +76,4 @@ func DailyCurrencyAdder(URL string) {
 	db := SetupDB()
 	db.Init()
 	db.Add(currency)
-
 }
