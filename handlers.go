@@ -52,16 +52,15 @@ func test(w http.ResponseWriter, r *http.Request){
 		}
 
 		//data object
-		var data Data
+		//var data Data
 
 		//json decoder
-		err = json.NewDecoder(json1.Body).Decode(&data)
+		err = json.NewDecoder(json1.Body).Decode(&shit[s1[i]])
 		if err != nil { //err handler
 		fmt.Printf("Error: %s\n", err)
 		return
 		}
 
-		shit[s1[i]] = data
 
 	}
 	fmt.Fprintln(w, shit)
