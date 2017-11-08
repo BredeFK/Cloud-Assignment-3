@@ -83,7 +83,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
-// SendFlow
+// SendFlow ...
 func SendFlow(discMsg string, discID string) (string, string, string) {
 	authToken := os.Getenv("APIAI_TOKEN")
 

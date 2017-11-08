@@ -21,7 +21,7 @@ type ApiPayload struct {
 	} `json:"result"`
 }
 
-//2d data map
+//Data2d 2d data map
 type Data2d struct {
 	Date string                        `json:"date" bson:"date"`
 	Data map[string]map[string]float64 `json:"data" bson:"data"`
