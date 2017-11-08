@@ -17,7 +17,7 @@ type ApiPayload struct {
 		Action           *string
 		ActionIncomplete bool
 		Speech           string
-		Parameters       map[string]string `json:"parameters"`
+		Parameters       map[string]interface{} `json:"parameters"`
 	} `json:"result"`
 }
 
