@@ -53,7 +53,7 @@ func main() {
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
-	http.ListenAndServe(":8080", nil)
+	//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -83,7 +83,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
-// SendFlow
+// SendFlow ...
 func SendFlow(discMsg string, discID string) (string, string, string) {
 	authToken := os.Getenv("APIAI_TOKEN")
 

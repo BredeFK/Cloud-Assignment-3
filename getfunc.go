@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 )
@@ -69,9 +70,32 @@ func Add2d(m map[string]map[string]float64, base string, target string, value fl
 	mm[target] = value
 }
 
+// GetValue gets value from db
 func GetValue(s1 string, s2 string) float64 {
+
+	// Get today's date in date format
+	tempToday := time.Now().Local()
+	today := tempToday.Format("2006-01-02")
+
+	// Set up the database
 	db := SetupDB()
 	db.Init()
-	data2d, _ := db.GetLatest("2017-11-08")
+
+	// Get today's currencies for today
+	data2d, ok := db.GetLatest(today)
+
+	// If there isn't any data in the db for today
+	if ok == false {
+
+		// Try to get data from yesterday
+		tempToday = time.Now().Local().AddDate(0, 0, -1)
+		yesterday := tempToday.Format("2006-01-02")
+		data2d, ok = db.GetLatest(yesterday)
+
+		// If there's still not any data: log error to heroku
+		if ok == false {
+			log.Println("Could not get any data from today or yesterday:/", 404)
+		}
+	}
 	return data2d.Data[s1][s2]
 }

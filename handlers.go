@@ -23,6 +23,7 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 		}*/
 }
 
+// HandleWebhook handles webhooks
 func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
@@ -36,6 +37,7 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// HandleAddCurrency adds currencies to db
 func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
 	DailyCurrencyAdder()
 }
