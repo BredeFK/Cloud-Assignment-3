@@ -77,7 +77,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	ans, base, target, amount := SendFlow(m.Content, m.Author.ID)
 
-	value := gofiles.GetValue(base, target)
+	value := gofiles.GetValue(base.(string), target.(string))
 
 	if amount != nil{
 		amount2, err := strconv.ParseFloat(amount.(string), 64)
@@ -93,7 +93,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 // SendFlow ...
-func SendFlow(discMsg string, discID string) (string, string, string, interface{}) {
+func SendFlow(discMsg string, discID string) (string, interface{}, interface{}, interface{}) {
 	authToken := os.Getenv("APIAI_TOKEN")
 
 	params := url.Values{}
@@ -104,7 +104,7 @@ func SendFlow(discMsg string, discID string) (string, string, string, interface{
 	ai, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		fmt.Println("something wrong with the GET request to dialogflow!")
-		return "", "", "", 0
+		return "", "", "", nil
 	}
 
 	ai.Header.Set("Authorization", "Bearer "+authToken)
@@ -116,14 +116,14 @@ func SendFlow(discMsg string, discID string) (string, string, string, interface{
 		datastring, _ := ioutil.ReadAll(resp.Body)
 		err := json.NewDecoder(strings.NewReader(string(datastring))).Decode(&input)
 		if err != nil {
-			return "", "", "", 0
+			return "", "", "", nil
 		}
 
 
 		if input.Result.Parameters["number"] != "" {
-			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"]
+			return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"], input.Result.Parameters["number"]
 		}
-		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), nil
+		return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"], nil
 	}
-	return "", "", "", 0
+	return "", "", "", nil
 }
