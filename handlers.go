@@ -8,7 +8,7 @@ import (
 //HandleMain main function for /
 func HandleMain(w http.ResponseWriter, r *http.Request) {
 	//	URL := strings.Split(r.URL.Path, "/")
-	fmt.Fprintf(w, "Dyno woken up! yai %s\n", http.StatusOK)
+	fmt.Fprintf(w, "Dyno woken up! yai %v\n", http.StatusOK)
 	/*
 		switch r.Method {
 		case "GET":
@@ -36,8 +36,6 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
 	DailyCurrencyAdder()
 }
-

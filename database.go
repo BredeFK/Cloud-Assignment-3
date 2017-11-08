@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 	"log"
 	"os"
-	"fmt"
 )
 
 // SetupDB sets up the database
@@ -17,11 +18,10 @@ func SetupDB() *MongoDB {
 
 	fmt.Println(db.DatabaseURL)
 
-
 	session, err := mgo.Dial(db.DatabaseURL)
 	defer session.Close()
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err.Error())
 	}
 
@@ -69,6 +69,25 @@ func (db *MongoDB) Add(data Data2d) error {
 	}
 
 	return nil
+}
+
+// GetLatest gets the latest currencies with date as index
+func (db *MongoDB) GetLatest(date string) (Data2d, bool) {
+	session, err := mgo.Dial(db.DatabaseURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer session.Close()
+
+	data2d := Data2d{}
+	notToday := true
+
+	err = session.DB(db.DatabaseName).C(db.ColCurrency).Find(bson.M{"date": date}).One(&data2d)
+	if err != nil {
+		notToday = false
+	}
+
+	return data2d, notToday
 }
 
 // DailyCurrencyAdder adds currency once a day
