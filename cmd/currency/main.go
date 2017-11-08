@@ -104,12 +104,10 @@ func SendFlow(discMsg string, discID string) (string, string, string, float64) {
 
 	ai.Header.Set("Authorization", "Bearer "+authToken)
 
-	if resp, err := http.DefaultClient.Do(ai); err != nil {
-		return "", "", "", 0
-	} else {
+	if resp, err := http.DefaultClient.Do(ai); err == nil {
 		defer resp.Body.Close()
 
-		var input gofiles.ApiPayload
+		var input gofiles.APIPayload
 		datastring, _ := ioutil.ReadAll(resp.Body)
 		err := json.NewDecoder(strings.NewReader(string(datastring))).Decode(&input)
 		if err != nil {
@@ -118,8 +116,12 @@ func SendFlow(discMsg string, discID string) (string, string, string, float64) {
 
 		if input.Result.Parameters["number"] != "" {
 			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"].(float64)
-		}else{
-			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), 0
 		}
+
+		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), 0
+
+
 	}
+
+	return "", "", "", 0
 }

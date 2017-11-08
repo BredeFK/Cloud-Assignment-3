@@ -7,8 +7,8 @@ type MongoDB struct {
 	ColCurrency  string
 }
 
-//ApiPayload struct, //what we get back from Dialogflow
-type ApiPayload struct {
+//APIPayload struct, //what we get back from Dialogflow
+type APIPayload struct {
 	Status struct {
 		Code      int
 		ErrorType string
