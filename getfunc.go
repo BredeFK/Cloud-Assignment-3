@@ -2,14 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
-	"log"
 	"net/http"
-	"time"
 	"fmt"
 )
 
 // GetCurrency gets the currency from string URL
+
 func GetCurrency() Data2d{
 
 	//Currency codes

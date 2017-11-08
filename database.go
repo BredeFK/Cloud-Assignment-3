@@ -10,7 +10,7 @@ import (
 // SetupDB sets up the database
 func SetupDB() *MongoDB {
 	db := MongoDB{
-		os.Getenv("MONGODB_URI"), // Environment variable from Heroku
+		os.Getenv("MONGODB"), // Environment variable from Heroku
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}
@@ -53,6 +53,7 @@ func (db *MongoDB) Init() {
 
 // Add adds the db
 func (db *MongoDB) Add(p Data2d) error {
+
 	session, err := mgo.Dial(db.DatabaseURL)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -60,7 +61,7 @@ func (db *MongoDB) Add(p Data2d) error {
 
 	defer session.Close()
 
-	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(p)
+	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(c)
 
 	if err != nil {
 		log.Printf("Could not add to db, error in Insert(): %v", err.Error())
@@ -76,5 +77,4 @@ func DailyCurrencyAdder() {
 	db := SetupDB()
 	db.Init()
 	db.Add(data2d)
-
 }

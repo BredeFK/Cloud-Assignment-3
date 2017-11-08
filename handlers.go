@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"encoding/json"
 )
 
 //HandleMain main function for /
@@ -39,7 +38,6 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 
 
 func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
-	//URL := "http://api.fixer.io/latest?base=EUR"
 	DailyCurrencyAdder()
 }
 
