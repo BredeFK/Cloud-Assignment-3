@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"strings"
+	"strconv"
 )
 
 // Variables used for command line parameters
@@ -78,8 +79,11 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	value := gofiles.GetValue(base, target)
 
-	if amount > 0{
-		value *= amount
+	amount2, err := strconv.ParseFloat(amount.(string), 64)
+	if err != nil{
+		panic(err.Error())
+	}else if amount2 > 0{
+		value *= amount2
 	}
 
 	if value != 0 {
@@ -88,7 +92,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 // SendFlow ...
-func SendFlow(discMsg string, discID string) (string, string, string, float64) {
+func SendFlow(discMsg string, discID string) (string, string, string, interface{}) {
 	authToken := os.Getenv("APIAI_TOKEN")
 
 	params := url.Values{}
@@ -113,8 +117,10 @@ func SendFlow(discMsg string, discID string) (string, string, string, float64) {
 		if err != nil {
 			return "", "", "", 0
 		}
+
+
 		if input.Result.Parameters["number"] != "" {
-			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"].(float64)
+			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"]
 		}
 		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), 0
 	}
