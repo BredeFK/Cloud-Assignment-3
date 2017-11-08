@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"strings"
 )
+//hei barn
 
 // Variables used for command line parameters
 var (
@@ -21,7 +22,7 @@ var (
 
 func init() {
 
-	flag.StringVar(&Token, "t", "Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg", "Bot Token")
+	flag.StringVar(&Token, "t", os.Getenv("DISCORD_TOKEN"), "Bot Token")
 	flag.Parse()
 }
 
@@ -48,6 +49,7 @@ func main() {
 	http.HandleFunc("/", HandleMain)
 	http.HandleFunc("/webhook", HandleWebhook)
 	http.HandleFunc("add", HandleAddCurrency)	// TODO : Remove this and make it automatic
+	http.HandleFunc("/test", test)
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
@@ -83,7 +85,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func SendFlow(discMsg string, discID string)(string, string, string){
-	authToken := "5bd836a84e0747a1a091bb1a6aef9ad1"
+	authToken := os.Getenv("APIAI_TOKEN")
 
 
 	params := url.Values{}
