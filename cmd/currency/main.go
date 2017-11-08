@@ -79,13 +79,14 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	value := gofiles.GetValue(base, target)
 
-	amount2, err := strconv.ParseFloat(amount.(string), 64)
-	if err != nil{
-		panic(err.Error())
-	}else if amount2 > 0{
-		value *= amount2
+	if amount != nil{
+		amount2, err := strconv.ParseFloat(amount.(string), 64)
+		if err != nil{
+			panic(err.Error())
+		}else if amount2 > 0{
+			value *= amount2
+		}
 	}
-
 	if value != 0 {
 		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
 	}
@@ -122,7 +123,7 @@ func SendFlow(discMsg string, discID string) (string, string, string, interface{
 		if input.Result.Parameters["number"] != "" {
 			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"]
 		}
-		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), 0
+		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), nil
 	}
 	return "", "", "", 0
 }
