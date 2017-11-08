@@ -2,13 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
 	"time"
 )
 
 // GetCurrency gets the currency from string URL
-func GetCurrency() Data2d{
+func GetCurrency() Data2d {
 
 	//Currency codes
 	s1 := []string{
@@ -27,7 +27,6 @@ func GetCurrency() Data2d{
 
 	//sets date
 	data2d.Date = time.Now().Format("2006-01-02")
-
 
 	for i := 0; i < len(s1); i++ {
 		//gets currencies from Fixer with the BASE currency
@@ -71,6 +70,9 @@ func Add2d(m map[string]map[string]float64, base string, target string, value fl
 }
 
 func GetValue(s1 string, s2 string) float64{
-	data2d := dbgetdata2d()
+	db := SetupDB()
+	db.Init()
+	data2d, _ := db.GetLatest("2017-11-08")
 	return data2d.Data[s1][s2]
 }
+
