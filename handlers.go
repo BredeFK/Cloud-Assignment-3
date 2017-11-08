@@ -39,7 +39,8 @@ func HandleWebhook(w http.ResponseWriter, r *http.Request) {
 
 
 func HandleAddCurrency(w http.ResponseWriter, r *http.Request) {
-	DailyCurrencyAdder()
+	URL := "http://api.fixer.io/latest?base=EUR"
+	DailyCurrencyAdder(URL)
 }
 
 func test(w http.ResponseWriter, r *http.Request){
