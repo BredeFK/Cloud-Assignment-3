@@ -71,7 +71,8 @@ func (db *MongoDB) Add(c Currency) error {
 }
 
 // DailyCurrencyAdder adds currency once a day
-func DailyCurrencyAdder(URL string) {
+func DailyCurrencyAdder() {
+	URL := "http://api.fixer.io/latest?base=EUR"
 	currency := GetCurrency(URL)
 	db := SetupDB()
 	db.Init()
