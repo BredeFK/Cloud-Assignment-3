@@ -119,6 +119,9 @@ func SendFlow(discMsg string, discID string) (string, interface{}, interface{}, 
 			return "", "", "", nil
 		}
 
+		if input.Result.Parameters["baseCurrency"] == nil || input.Result.Parameters["targetCurrency"] == nil{
+			return input.Result.Speech, nil, nil, nil
+		}
 
 		if input.Result.Parameters["number"] != "" {
 			return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"], input.Result.Parameters["number"]
