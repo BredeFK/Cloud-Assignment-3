@@ -71,8 +71,27 @@ func (db *MongoDB) Add(data Data2d) error {
 	return nil
 }
 
+// Count counts the number of currency jsons
+func (db *MongoDB) Count() int {
+	session, err := mgo.Dial(db.DatabaseURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer session.Close()
+
+	count, err := session.DB(db.DatabaseName).C(db.ColCurrency).Count()
+	if err != nil {
+		log.Printf("Error in Count(): %v", err.Error())
+		return -1
+	}
+
+	return count
+}
+
 // GetLatest gets the latest currencies with date as index
 func (db *MongoDB) GetLatest(date string) (Data2d, bool) {
+
+	count := db.Count()
 	session, err := mgo.Dial(db.DatabaseURL)
 	if err != nil {
 		log.Fatal(err)
@@ -82,7 +101,11 @@ func (db *MongoDB) GetLatest(date string) (Data2d, bool) {
 	data2d := Data2d{}
 	notToday := true
 
-	err = session.DB(db.DatabaseName).C(db.ColCurrency).Find(bson.M{"date": date}).One(&data2d)
+	if date != "noDate" {
+		err = session.DB(db.DatabaseName).C(db.ColCurrency).Find(bson.M{"date": date}).One(&data2d)
+	} else {
+		err = session.DB(db.DatabaseName).C(db.ColCurrency).Find(nil).Skip(count - 1).One(&data2d)
+	}
 	if err != nil {
 		notToday = false
 	}
