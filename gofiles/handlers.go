@@ -50,7 +50,7 @@ func DiscordHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	//if the value is 0, do not send an answer with the value
 	if value != 0 {
 		//sends answer to discord with value
-		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprintf("%.2f", value))
+		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprintf("%.3f", value))
 	} else {
 		//sends answer to discord without value
 		s.ChannelMessageSend(m.ChannelID, ans)
