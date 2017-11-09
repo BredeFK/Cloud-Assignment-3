@@ -40,4 +40,4 @@ cloudtech3/gofiles/getfunc.go:66.9,69.3 2 1
 cloudtech3/gofiles/getfunc.go:74.45,84.17 4 1
 cloudtech3/gofiles/getfunc.go:89.2,89.28 1 1
 cloudtech3/gofiles/getfunc.go:84.17,88.3 2 0
-cloudtech3/gofiles/handlers.go:9.57,24.2 1 0
+cloudtech3/gofiles/handlers.go:9.57,11.2 1 1

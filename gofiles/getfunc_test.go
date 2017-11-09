@@ -27,9 +27,8 @@ func TestAdd2d(t *testing.T) {
 
 	Add2d(data2d.Data, out[0], out[1], outF)
 
-
 	if data2d.Data[out[0]] == nil {
-		t.Fatalf("ERROR, expected: %s%v, got %s", out[1], outF, nil)
+		t.Fatalf("ERROR, expected: %s%v, got %s", out[1], outF, "nil")
 	}
 
 	if data2d.Data[out[0]][out[1]] != outF {
@@ -64,7 +63,7 @@ func TestGetValue(t *testing.T) {
 
 	testValue := GetValue(out[0], out[1])
 
-	if realValue != testValue{
+	if realValue != testValue {
 		t.Fatalf("ERROR, expected %v, got %v\n", realValue, testValue)
 	}
 }
