@@ -22,4 +22,3 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Request not supported.", http.StatusNotImplemented)
 		}*/
 }
-

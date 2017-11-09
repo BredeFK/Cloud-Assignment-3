@@ -1,20 +1,20 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/JohanAanesen/CloudTech_oblig3/gofiles"
 	"github.com/bwmarrin/discordgo"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
-	"syscall"
-	"log"
-	"io/ioutil"
-	"encoding/json"
-	"strings"
 	"strconv"
+	"strings"
+	"syscall"
 )
 
 // Variables used for command line parameters
@@ -51,10 +51,10 @@ func main() {
 
 	http.HandleFunc("/", gofiles.HandleMain)
 
-	//Router
+	// Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
-//	http.ListenAndServe(":8080", nil)
+	//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -81,19 +81,19 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		value = gofiles.GetValue(base, target)
 	}
 
-	if amount != ""{
+	if amount != "" {
 		amount2, err := strconv.ParseFloat(amount, 64)
-		if err != nil{
+		if err != nil {
 			fmt.Println("Its fucked: ", err)
 			return
-		}else if amount2 > 0{
+		} else if amount2 > 0 {
 			value *= amount2
 		}
 	}
 
 	if value != 0 {
 		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
-	}else{
+	} else {
 		s.ChannelMessageSend(m.ChannelID, ans)
 	}
 
@@ -126,11 +126,11 @@ func SendFlow(discMsg string, discID string) (string, string, string, string) {
 			return "", "", "", ""
 		}
 
-		if input.Result.Parameters == nil{
+		if input.Result.Parameters == nil {
 			return input.Result.Speech, "", "", ""
 		}
 
-		if input.Result.Parameters["baseCurrency"] == nil || input.Result.Parameters["targetCurrency"] == nil || input.Result.Parameters["number"] == nil{
+		if input.Result.Parameters["baseCurrency"] == nil || input.Result.Parameters["targetCurrency"] == nil || input.Result.Parameters["number"] == nil {
 			return input.Result.Speech, "", "", ""
 		}
 
