@@ -1,7 +1,6 @@
 package gofiles
 
 import (
-	"log"
 	"testing"
 	"time"
 )
@@ -30,31 +29,26 @@ func TestAdd2d(t *testing.T) {
 
 func TestGetValue(t *testing.T) {
 	out := []string{"NOK", "EUR"}
-
-	// Get today's date in date format
-	tempToday := time.Now().Local()
-	today := tempToday.Format("2006-01-02")
+	date := time.Now()
+	dateCopy := date.Format("2006-01-02")
 
 	// Set up the database
 	db := SetupDB()
 	db.Init()
 
 	// Get today's currencies for today
-	data2d, ok := db.GetLatest(today)
+	data2d, ok := db.GetLatest(dateCopy)
 
-	// If there isn't any data in the db for today
+	// If there isn't any data in the db
 	if ok == false {
-
-		// Try to get data from yesterday
-		tempToday = time.Now().Local().AddDate(0, 0, -1)
-		yesterday := tempToday.Format("2006-01-02")
-		data2d, ok = db.GetLatest(yesterday)
-
-		// If there's still not any data: log error to heroku
+		date = date.AddDate(0,0,-1)
+		dateCopy = date.Format("2006-01-02")
+		data2d, ok = db.GetLatest(dateCopy)
 		if ok == false {
-			log.Println("Could not get any data from today or yesterday:/", 404)
+			t.Fatalf("ERROR could not retrieve data from db")
 		}
 	}
+
 	realValue := data2d.Data[out[0]][out[1]]
 
 	testValue := GetValue(out[0], out[1])
