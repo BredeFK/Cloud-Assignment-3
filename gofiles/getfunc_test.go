@@ -3,8 +3,17 @@ package gofiles
 import (
 	"testing"
 	"time"
-	"fmt"
 )
+
+func TestGetCurrency(t *testing.T) {
+	out := []string{"NOK", "EUR"}
+	testValue := GetValue(out[0], out[1])
+	data2d := GetCurrency()
+
+	if testValue != data2d.Data[out[0]][out[1]]{
+		t.Fatalf("ERROR expected: %v got %v", testValue, data2d.Data[out[0]][out[1]])
+	}
+}
 
 func TestAdd2d(t *testing.T) {
 	var data2d Data2d
