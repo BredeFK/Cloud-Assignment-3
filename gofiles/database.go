@@ -5,13 +5,12 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
-	"os"
 )
 
 // SetupDB sets up the database
 func SetupDB() *MongoDB {
 	db := MongoDB{
-		os.Getenv("MONGODB"), // Environment variable from Heroku
+		"mongodb://user:user123@ds149855.mlab.com:49855/heroku_pgvgprmm",
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}

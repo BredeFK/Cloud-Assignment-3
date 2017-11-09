@@ -84,6 +84,7 @@ func GetValue(s1 string, s2 string) float64 {
 	if ok == false {
 		// If there's no data, log to heroku
 		log.Println("There is no data to get", 404)
+		return 0
 	}
 	return data2d.Data[s1][s2]
 }
