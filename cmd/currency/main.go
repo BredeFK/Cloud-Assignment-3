@@ -54,7 +54,7 @@ func main() {
 	//Router
 	port := os.Getenv("PORT")
 	http.ListenAndServe(":"+port, nil)
-	//	http.ListenAndServe(":8080", nil)
+//	http.ListenAndServe(":8080", nil)
 
 	// Wait here until CTRL-C or other term signal is received.
 	log.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -69,7 +69,7 @@ func main() {
 
 // messageCreate is created on any channel that the autenticated bot has access to.
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-
+	var value float64
 	// Ignore all messages created by the bot itself
 	if m.Author.ID == s.State.User.ID {
 		return
@@ -77,27 +77,30 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	ans, base, target, amount := SendFlow(m.Content, m.Author.ID)
 
-	value := gofiles.GetValue(base.(string), target.(string))
+	if base != "" || target != "" {
+		value = gofiles.GetValue(base, target)
+	}
 
-	if amount != nil{
-		amount2, err := strconv.ParseFloat(amount.(string), 64)
+	if amount != ""{
+		amount2, err := strconv.ParseFloat(amount, 64)
 		if err != nil{
-			panic(err.Error())
+			fmt.Println("Its fucked: ", err)
+			return
 		}else if amount2 > 0{
 			value *= amount2
 		}
-
-		if value != 0 {
-			s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
-		}
 	}
 
+	if value != 0 {
+		s.ChannelMessageSend(m.ChannelID, ans+" "+fmt.Sprint(value))
+	}else{
 		s.ChannelMessageSend(m.ChannelID, ans)
+	}
 
 }
 
 // SendFlow ...
-func SendFlow(discMsg string, discID string) (string, interface{}, interface{}, interface{}) {
+func SendFlow(discMsg string, discID string) (string, string, string, string) {
 	authToken := os.Getenv("APIAI_TOKEN")
 
 	params := url.Values{}
@@ -108,7 +111,7 @@ func SendFlow(discMsg string, discID string) (string, interface{}, interface{}, 
 	ai, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		fmt.Println("something wrong with the GET request to dialogflow!")
-		return "", "", "", nil
+		return "", "", "", ""
 	}
 
 	ai.Header.Set("Authorization", "Bearer "+authToken)
@@ -120,17 +123,21 @@ func SendFlow(discMsg string, discID string) (string, interface{}, interface{}, 
 		datastring, _ := ioutil.ReadAll(resp.Body)
 		err := json.NewDecoder(strings.NewReader(string(datastring))).Decode(&input)
 		if err != nil {
-			return "", "", "", nil
+			return "", "", "", ""
+		}
+
+		if input.Result.Parameters == nil{
+			return input.Result.Speech, "", "", ""
 		}
 
 		if input.Result.Parameters["baseCurrency"] == nil || input.Result.Parameters["targetCurrency"] == nil || input.Result.Parameters["number"] == nil{
-			return input.Result.Speech, nil, nil, nil
+			return input.Result.Speech, "", "", ""
 		}
 
 		if input.Result.Parameters["number"] != "" {
-			return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"], input.Result.Parameters["number"]
+			return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), input.Result.Parameters["number"].(string)
 		}
-		return input.Result.Speech, input.Result.Parameters["baseCurrency"], input.Result.Parameters["targetCurrency"], nil
+		return input.Result.Speech, input.Result.Parameters["baseCurrency"].(string), input.Result.Parameters["targetCurrency"].(string), ""
 	}
-	return "", "", "", nil
+	return "", "", "", ""
 }
