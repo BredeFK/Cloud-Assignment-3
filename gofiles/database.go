@@ -15,7 +15,7 @@ func SetupDB() *MongoDB {
 		"currencyCollection",
 	}
 
-	fmt.Println(db.DatabaseURL)
+	fmt.Println(db.DatabaseURL)	// TODO : What's this for?
 
 	session, err := mgo.Dial(db.DatabaseURL)
 	defer session.Close()
