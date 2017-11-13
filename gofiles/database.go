@@ -54,7 +54,6 @@ func (db *MongoDB) Add(data Data2d) error {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
 	defer session.Close()
 
 	err = session.DB(db.DatabaseName).C(db.ColCurrency).Insert(data)
@@ -120,7 +119,7 @@ func DailyCurrencyAdder() {
 // GetValue gets value from db
 func GetValue(s1 string, s2 string) float64 {
 
-	if s1 == s2{
+	if s1 == s2 {
 		return 1
 	}
 

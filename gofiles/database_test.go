@@ -1,13 +1,20 @@
 package gofiles
 
 import (
-	"testing"
-	"time"
 	"gopkg.in/mgo.v2"
 	"log"
+	"testing"
+	"time"
 )
 
-func setupTestDB() *MongoDB{
+type Test struct {
+	Date     string
+	Base     string
+	Target   string
+	Currency float64
+}
+
+func setupTestDB() *MongoDB {
 	db := MongoDB{
 		"mongodb://localhost",
 		"testDB",
@@ -17,7 +24,7 @@ func setupTestDB() *MongoDB{
 	session, err := mgo.Dial(db.DatabaseURL)
 	defer session.Close()
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err.Error())
 	}
 
@@ -26,12 +33,16 @@ func setupTestDB() *MongoDB{
 
 func TestMongoDB_Add(t *testing.T) {
 
-	/*
-		data2d := GetCurrency()
-		db := setupTestDB()
-		db.Init()
-		db.Add(data2d)
-	*/
+	var data Data2d
+	data.Data = make(map[string]map[string]float64)
+	Add2d(data.Data, "EUR", "NOK", 9.5)
+
+	db := setupTestDB()
+	db.Init()
+	ok := db.Add(data)
+	if ok != nil {
+		t.Fatalf("Could not add to testDB")
+	}
 }
 
 func TestMongoDB_GetLatest(t *testing.T) {
