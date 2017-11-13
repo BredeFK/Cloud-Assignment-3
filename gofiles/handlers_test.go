@@ -39,3 +39,13 @@ func TestSendFlow(t *testing.T) {
 		t.Fatalf("ERROR: Expected %s got %s", in[2], amount)
 	}
 }
+
+func TestGetCurrency(t *testing.T) {
+	out := []string{"NOK", "EUR"}
+	testValue := GetValue(out[0], out[1])
+	data2d := GetCurrency()
+
+	if testValue != data2d.Data[out[0]][out[1]]{
+		t.Fatalf("ERROR expected: %v got %v", testValue, data2d.Data[out[0]][out[1]])
+	}
+}
