@@ -27,7 +27,6 @@ func DiscordHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	//sends the message from discord to dialogflow, gets back answer, base and target currency and value
 	ans, base, target, amount := SendFlow(m.Content, m.Author.ID)
-
 	//if base and target is not empty
 	if base != "" || target != "" {
 		value = GetValue(base, target)
