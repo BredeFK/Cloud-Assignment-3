@@ -3,12 +3,32 @@ package gofiles
 import (
 	"testing"
 	"time"
+	"gopkg.in/mgo.v2"
+	"log"
 )
 
+func setupTestDB() *MongoDB{
+	db := MongoDB{
+		"mongodb://localhost",
+		"testDB",
+		"currency",
+	}
+
+	session, err := mgo.Dial(db.DatabaseURL)
+	defer session.Close()
+
+	if err != nil{
+		log.Fatal(err.Error())
+	}
+
+	return &db
+}
+
 func TestMongoDB_Add(t *testing.T) {
+
 	/*
 		data2d := GetCurrency()
-		db := SetupDB()
+		db := setupTestDB()
 		db.Init()
 		db.Add(data2d)
 	*/
