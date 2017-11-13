@@ -109,11 +109,9 @@ func (db *MongoDB) GetLatest(date string) (Data2d, bool) {
 }
 
 // DailyCurrencyAdder adds currency once a day
-func DailyCurrencyAdder() {
-	data2d := GetCurrency()
-	db := SetupDB()
+func (db *MongoDB) DailyCurrencyAdder(data Data2d) {
 	db.Init()
-	db.Add(data2d)
+	db.Add(data)
 }
 
 // GetValue gets value from db

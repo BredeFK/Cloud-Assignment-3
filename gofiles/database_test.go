@@ -7,14 +7,7 @@ import (
 	"time"
 )
 
-type Test struct {
-	Date     string
-	Base     string
-	Target   string
-	Currency float64
-}
-
-func setupTestDB() *MongoDB {
+func SetupTestDB() *MongoDB {
 	db := MongoDB{
 		"mongodb://localhost",
 		"testDB",
@@ -31,13 +24,27 @@ func setupTestDB() *MongoDB {
 	return &db
 }
 
+func (db *MongoDB) DropDB() {
+
+	session, err := mgo.Dial(db.DatabaseURL)
+	defer session.Close()
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	err = session.DB(db.DatabaseName).DropDatabase()
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+}
+
 func TestMongoDB_Add(t *testing.T) {
 
 	var data Data2d
 	data.Data = make(map[string]map[string]float64)
 	Add2d(data.Data, "EUR", "NOK", 9.5)
 
-	db := setupTestDB()
+	db := SetupTestDB()
 	db.Init()
 	ok := db.Add(data)
 	if ok != nil {
@@ -47,33 +54,55 @@ func TestMongoDB_Add(t *testing.T) {
 
 func TestMongoDB_GetLatest(t *testing.T) {
 
-	/*
-		db := SetupTestDB()
-		db.Init()
+	var data Data2d
+	data.Data = make(map[string]map[string]float64)
+	Add2d(data.Data, "EUR", "NOK", 9.5)
 
-		session, err := mgo.Dial(db.DatabaseURL)
-		if err !=nil {
-			t.Fatal(err.Error())
-		}
+	db := SetupTestDB()
+	db.Init()
 
-		defer session.Close()
+	session, err := mgo.Dial(db.DatabaseURL)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
 
+	defer session.Close()
 
-		data2d, ok := db.GetLatest("noDate")
-		if ok == false{
-			t.Fatal("Could not get latest currency in db")
-		}
+	testData, ok := db.GetLatest("noDate")
+	if ok == false {
+		t.Fatal("Could not get latest currency in db")
+	}
 
-	*/
+	if testData.Data["EUR"]["NOK"] != data.Data["EUR"]["NOK"] {
+		t.Fatalf("Could not get correct data in testGetLatest()")
+	}
 }
 
 func TestMongoDB_Count(t *testing.T) {
-	/*
-		db := SetupTestDB()
-		db.Init()
 
-		count := db.Count()
-	*/
+	db := SetupTestDB()
+	db.Init()
+
+	count := db.Count()
+
+	if count == -1 {
+		t.Errorf("Could not get count")
+	}
+
+	if count > 1 {
+		t.Errorf("Too much data in db")
+	}
+}
+
+func TestDailyCurrencyAdder(t *testing.T) {
+	var data Data2d
+	data.Data = make(map[string]map[string]float64)
+	Add2d(data.Data, "NOK", "DDK", 0.8)
+
+	db := SetupTestDB()
+	db.Init()
+	db.DailyCurrencyAdder(data)
+	db.DropDB()
 }
 
 func TestGetValue(t *testing.T) {
