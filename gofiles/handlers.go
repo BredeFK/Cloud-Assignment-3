@@ -1,23 +1,23 @@
 package gofiles
 
 import (
-	"fmt"
-	"net/http"
-	"github.com/bwmarrin/discordgo"
-	"strconv"
-	"os"
-	"net/url"
-	"io/ioutil"
 	"encoding/json"
+	"fmt"
+	"github.com/bwmarrin/discordgo"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"os"
+	"strconv"
 	"strings"
 )
 
 //HandleMain main function for /
 func HandleMain(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Dyno woken up! yai statuscode: %s\n", http.StatusOK)
+	fmt.Fprintf(w, "Dyno woken up! yai statuscode: %v\n", http.StatusOK)
 }
 
-// messageCreate is created on any channel that the autenticated bot has access to.
+// DiscordHandler is created on any channel that the autenticated bot has access to.
 func DiscordHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	var value float64
 	// Ignore all messages created by the bot itself

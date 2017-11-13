@@ -25,17 +25,17 @@ func TestHandleMain(t *testing.T) {
 
 func TestSendFlow(t *testing.T) {
 	testMessage := "10 NOK TO EUR"
-	in := []string{"NOK", "EUR","10"}
+	in := []string{"NOK", "EUR", "10"}
 
 	_, base, target, amount := SendFlow(testMessage, "12412413")
 
-	if base != in[0]{
+	if base != in[0] {
 		t.Fatalf("ERROR: Expected %s got %s", in[0], base)
 	}
-	if target != in[1]{
+	if target != in[1] {
 		t.Fatalf("ERROR: Expected %s got %s", in[1], target)
 	}
-	if amount != in[2]{
+	if amount != in[2] {
 		t.Fatalf("ERROR: Expected %s got %s", in[2], amount)
 	}
 }

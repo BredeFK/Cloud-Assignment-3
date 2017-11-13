@@ -60,7 +60,3 @@ func main() {
 	dg.Close()
 
 }
-
-
-
-

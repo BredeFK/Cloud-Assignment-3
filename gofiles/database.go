@@ -15,7 +15,7 @@ func SetupDB() *MongoDB {
 		"currencyCollection",
 	}
 
-	fmt.Println(db.DatabaseURL)	// TODO : What's this for?
+	fmt.Println(db.DatabaseURL) // TODO : What's this for?
 
 	session, err := mgo.Dial(db.DatabaseURL)
 	defer session.Close()
@@ -118,4 +118,23 @@ func DailyCurrencyAdder() {
 	db := SetupDB()
 	db.Init()
 	db.Add(data2d)
+}
+
+// GetValue gets value from db
+func GetValue(s1 string, s2 string) float64 {
+
+	// Set up the database
+	db := SetupDB()
+	db.Init()
+
+	// Get today's currencies for today
+	data2d, ok := db.GetLatest("noDate")
+
+	// If there isn't any data in the db for today
+	if ok == false {
+		// If there's no data, log to heroku
+		log.Println("There is no data to get", 404)
+		return 0
+	}
+	return data2d.Data[s1][s2]
 }
