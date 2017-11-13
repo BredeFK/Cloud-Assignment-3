@@ -45,6 +45,8 @@ func GetCurrency() Data2d {
 				Add2d(data2d.Data, s1[i], s1[j], data.Rates[s1[j]])
 			}
 		}
+		//limit requests to fixer.io to 5 requests per second
+		<-time.After(200 * time.Millisecond)
 	}
 
 	return data2d
