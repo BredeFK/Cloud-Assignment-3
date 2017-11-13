@@ -17,6 +17,8 @@ func main() {
 	if day != "Saturday" && day != "Sunday" {
 
 		// Add currencies
-		gofiles.DailyCurrencyAdder()
+		data2d := gofiles.GetCurrency()
+		db := gofiles.SetupDB()
+		db.DailyCurrencyAdder(data2d)
 	}
 }
