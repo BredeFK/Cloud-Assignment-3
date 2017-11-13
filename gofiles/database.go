@@ -1,7 +1,6 @@
 package gofiles
 
 import (
-	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
@@ -14,8 +13,6 @@ func SetupDB() *MongoDB {
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}
-
-	fmt.Println(db.DatabaseURL) // TODO : What's this for?
 
 	session, err := mgo.Dial(db.DatabaseURL)
 	defer session.Close()
