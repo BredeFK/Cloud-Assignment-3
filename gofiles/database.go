@@ -123,6 +123,10 @@ func DailyCurrencyAdder() {
 // GetValue gets value from db
 func GetValue(s1 string, s2 string) float64 {
 
+	if s1 == s2{
+		return 1
+	}
+
 	// Set up the database
 	db := SetupDB()
 	db.Init()
