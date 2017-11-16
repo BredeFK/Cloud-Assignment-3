@@ -8,4 +8,5 @@ go get gopkg.in/mgo.v2
 
 Authors:
 Johan Aanesen
+
 Brede Fritjof Klausen
