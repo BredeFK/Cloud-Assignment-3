@@ -16,9 +16,13 @@ func main() {
 	// Only get data if it's not the weekend (fixer.io does not update in weekends)
 	if day != "Saturday" && day != "Sunday" {
 
-		// Add currencies
+		// Get currencies from fixer.io
 		data2d := gofiles.GetCurrency()
+
+		// Set up db
 		db := gofiles.SetupDB()
+
+		// Add currencies to mongodb
 		db.DailyCurrencyAdder(data2d)
 	}
 }
