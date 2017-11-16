@@ -6,7 +6,9 @@ go get github.com/bwmarrin/discordgo
 go get gopkg.in/mgo.v2
 ```
 
-Authors:
-Johan Aanesen
+## Authors ##
 
-Brede Fritjof Klausen
+| Name                  | Bitbucket                                         | Email                                                 |
+|-----------------------|---------------------------------------------------|-------------------------------------------------------|
+| Brede Fritjof Klausen | [BredeFK](https://github.com/BredeFK)             | [bredefk@stud.ntnu.no](mailto:bredefk@stud.ntnu.no)   |
+| Johan Aanesen         | [JohanAanesen](https://github.com/JohanAanesen)   | [mathisti@stud.ntnu.no](mailto:johanaan@stud.ntnu.no) |
