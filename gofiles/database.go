@@ -4,6 +4,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
+	"os"
 )
 
 // SetupDB sets up the database
@@ -11,7 +12,7 @@ func SetupDB() *MongoDB {
 
 	// Make new MongoDB struct
 	db := MongoDB{
-		"mongodb://user:user123@ds149855.mlab.com:49855/heroku_pgvgprmm",
+		os.Getenv("MONGODB"),
 		"heroku_pgvgprmm",
 		"currencyCollection",
 	}
