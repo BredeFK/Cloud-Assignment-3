@@ -111,7 +111,7 @@ func TestGetValue(t *testing.T) {
 	dateCopy := date.Format("2006-01-02")
 
 	// Set up the database
-	db := SetupDB()
+	db := SetupTestDB()
 	db.Init()
 
 	// Get today's currencies for today

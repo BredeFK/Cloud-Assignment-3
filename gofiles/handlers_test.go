@@ -49,6 +49,7 @@ func TestGetCurrency(t *testing.T) {
 		t.Fatalf("ERROR expected: %v got %v", testValue, data2d.Data[out[0]][out[1]])
 	}
 }
+
 /*
 func TestDiscordHandler(t *testing.T) {
 	var testmessage discordgo.Message
@@ -70,10 +71,3 @@ func TestDiscordHandler(t *testing.T) {
 	fmt.Println("\n", response[0].Content)
 
 }*/
-
-
-
-
-
-
-
