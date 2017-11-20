@@ -199,7 +199,7 @@ func (db *MongoDB) DailyCurrencyAdder(data Data2d) {
 }
 
 // GetValue gets value from db
-func GetValue(s1 string, s2 string) float64 {
+func (db *MongoDB) GetValue(s1 string, s2 string) float64 {
 
 	// If base is equal to target currency
 	if s1 == s2 {
@@ -209,7 +209,6 @@ func GetValue(s1 string, s2 string) float64 {
 	}
 
 	// Set up the database
-	db := SetupDB()
 	db.Init()
 
 	// Get today's currencies for today

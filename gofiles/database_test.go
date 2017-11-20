@@ -4,10 +4,10 @@ import (
 	"gopkg.in/mgo.v2"
 	"log"
 	"testing"
-	"time"
 )
 
 func SetupTestDB() *MongoDB {
+
 	db := MongoDB{
 		"mongodb://localhost",
 		"testDB",
@@ -94,7 +94,32 @@ func TestMongoDB_Count(t *testing.T) {
 	}
 }
 
+func TestGetValue(t *testing.T) {
+	out := []string{"NOK", "EUR"}
+
+	// Set up the database
+	db := SetupTestDB()
+	db.Init()
+
+	// Get today's currencies for today
+	data2d, ok := db.GetLatest("noDate")
+
+	// If there isn't any data in the db
+	if ok == false {
+		t.Fatalf("ERROR could not retrieve data from db")
+	}
+
+	realValue := data2d.Data[out[0]][out[1]]
+
+	testValue := db.GetValue(out[0], out[1])
+
+	if realValue != testValue {
+		t.Fatalf("ERROR, expected %v, got %v\n", realValue, testValue)
+	}
+}
+
 func TestDailyCurrencyAdder(t *testing.T) {
+
 	var data Data2d
 	data.Data = make(map[string]map[string]float64)
 	Add2d(data.Data, "NOK", "DDK", 0.8)
@@ -103,35 +128,4 @@ func TestDailyCurrencyAdder(t *testing.T) {
 	db.Init()
 	db.DailyCurrencyAdder(data)
 	db.DropDB()
-}
-
-func TestGetValue(t *testing.T) {
-	out := []string{"NOK", "EUR"}
-	date := time.Now()
-	dateCopy := date.Format("2006-01-02")
-
-	// Set up the database
-	db := SetupTestDB()
-	db.Init()
-
-	// Get today's currencies for today
-	data2d, ok := db.GetLatest(dateCopy)
-
-	// If there isn't any data in the db
-	if ok == false {
-		date = date.AddDate(0, 0, -1)
-		dateCopy = date.Format("2006-01-02")
-		data2d, ok = db.GetLatest(dateCopy)
-		if ok == false {
-			t.Fatalf("ERROR could not retrieve data from db")
-		}
-	}
-
-	realValue := data2d.Data[out[0]][out[1]]
-
-	testValue := GetValue(out[0], out[1])
-
-	if realValue != testValue {
-		t.Fatalf("ERROR, expected %v, got %v\n", realValue, testValue)
-	}
 }

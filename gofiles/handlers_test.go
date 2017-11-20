@@ -40,16 +40,6 @@ func TestSendFlow(t *testing.T) {
 	}
 }
 
-func TestGetCurrency(t *testing.T) {
-	out := []string{"NOK", "EUR"}
-	testValue := GetValue(out[0], out[1])
-	data2d := GetCurrency()
-
-	if testValue != data2d.Data[out[0]][out[1]] {
-		t.Fatalf("ERROR expected: %v got %v", testValue, data2d.Data[out[0]][out[1]])
-	}
-}
-
 /*
 func TestDiscordHandler(t *testing.T) {
 	var testmessage discordgo.Message

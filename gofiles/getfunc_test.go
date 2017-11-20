@@ -26,3 +26,21 @@ func TestAdd2d(t *testing.T) {
 	}
 
 }
+
+func TestGetCurrency(t *testing.T) {
+
+	out := []string{"EUR", "NOK"}
+	db := SetupTestDB()
+	db.Init()
+
+	data2d := GetCurrency()
+	db.Add(data2d)
+
+	testValue := db.GetValue(out[0], out[1])
+	db.DropDB()
+
+	if testValue != data2d.Data[out[0]][out[1]] {
+		t.Fatalf("ERROR expected: %v got %v", testValue, data2d.Data[out[0]][out[1]])
+	}
+
+}
