@@ -63,10 +63,7 @@ func DiscordHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 func SendFlow(discMsg string, discID string) (string, string, string, string) {
 	//gets api token from env var
 	authToken := os.Getenv("APIAI_TOKEN")
-
-	//testing purposes
-	authToken = "5bd836a84e0747a1a091bb1a6aef9ad1"
-
+	
 	//url parameters
 	params := url.Values{}
 	params.Add("query", discMsg)
