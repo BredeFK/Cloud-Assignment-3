@@ -39,25 +39,3 @@ func TestSendFlow(t *testing.T) {
 		t.Fatalf("ERROR: Expected %s got %s", in[2], amount)
 	}
 }
-
-/*
-func TestDiscordHandler(t *testing.T) {
-	var testmessage discordgo.Message
-	testmessage = discordgo.Message{
-		ID: "test",
-		ChannelID: "371707640041963524",
-		Content: "NOK to EUR",
-		Type: 0,
-	}
-	msgbyte, _ := json.Marshal(testmessage)
-
-	s, _ := discordgo.New("Bot Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg")
-
-	s.AddHandler(DiscordHandler)
-	s.MockEvent(1, msgbyte)
-
-	response, _ := s.ChannelMessages(testmessage.ChannelID, 1, "", "", "")
-
-	fmt.Println("\n", response[0].Content)
-
-}*/
