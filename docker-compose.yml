@@ -5,8 +5,6 @@ services:
     environment:
       - PORT=8080
       - MONGODB=db
-      - APIAI_TOKEN=5bd836a84e0747a1a091bb1a6aef9ad1
-      - DISCORD_TOKEN=Mzc3MjAwMzM1OTUwOTcwOTAw.DOJtqw.6cxZr4PpXXE6OWW_ned6mO8mizg
     build: ./cmd/currency
     ports:
       - "8080:8080"
